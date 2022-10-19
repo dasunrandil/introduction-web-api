@@ -14,3 +14,18 @@
     // transform: translateY(-50%);
 }
 
+body{
+    overflow: hidden;
+}
+
+#space-ship{
+    position: absolute;
+    background-image: url('/img/rocket.png');
+    background-size: contain;
+    width: 200px;
+    height: 200px;
+    top: 10vh;
+    transform:rotateZ(90deg);
+}
+
+

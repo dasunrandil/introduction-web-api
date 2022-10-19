@@ -34,6 +34,36 @@
 //     const y = ((innerHeight - 80)/2) +(Math.sin(x++ / 180) * ((innerHeight - 80)/2))
 //     boxElm.style.top = `${y}px`; 
 // },10);
+const rocketElm = document.getElementById('space-ship');
+
+let rx = 0;
+let right = false;
+
+setInterval(()=>{
+    rocketElm.style.left = `${rx}px`
+    rx += !right ? 10 : -10;
+    if (rocketElm.offsetLeft >= innerWidth){
+        right = true;
+        rocketElm.style.top = `${Math.random() * 80}vh`;
+        rocketElm.style.transform = `rotateZ(${270}deg)`
+    }else if(rx + rocketElm.offsetWidth <= 0){
+        right =false;
+        rocketElm.style.top = `${Math.random() * 80}vh`;
+        rocketElm.style.transform = `rotateZ(${90}deg)`  
+    }
+},20);
+
+// let rx = 10;
+
+// setInterval(()=>{
+//     if ((rocketElm.offsetLeft + rocketElm.offsetWidth) < innerWidth || rocketElm.offsetLeft == 0){
+//         rx = rx;
+//     }else if(rocketElm.offsetLeft >= innerWidth){
+//         rocketElm.style.top = `${Math.random() * 100}vh`
+//         rx = -rx;
+//     }
+//     rocketElm.style.left = `${rocketElm.offsetLeft + rx}px`;
+// },20);
 
 class Box{
     #width;
@@ -41,8 +71,17 @@ class Box{
     #dx;
     #dy;
     #elm;
+    #cursorElm;
+    #diameter;
+    #cursorDiameter=75;
+    #length;
+    #elmMidX=0;
+    #elmMidY=0;
+    #emlCursorMidX=0;
+    #emlCursorMidY=0;
 
     constructor(){
+        this.#cursorElm = document.getElementById('cursor');
         this.#elm = document.createElement('div');
         this.#elm.classList.add('box');
         this.#width = 20 + (Math.random() * 10);
@@ -61,15 +100,28 @@ class Box{
         this.#elm.style.backgroundColor = `rgba(${red},${green}, ${blue}, ${alpha})`;
         this.#elm.style.borderRadius = `${Math.random() * 101}%`;
         this.#elm.style.transform = `rotate(${Math.random() * 361}deg)`;
+        this.#diameter = Math.sqrt(Math.pow(this.#width, 2) + Math.pow(this.#height, 2));
+        this.#length = this.#diameter / 2 + this.#cursorDiameter / 2;
     }
 
     move(){
+        this.#elmMidX= this.#elm.offsetLeft;
+        this.#elmMidY=this.#elm.offsetTop;
+        this.#emlCursorMidX=this.#cursorElm.offsetLeft;
+        this.#emlCursorMidY=this.#cursorElm.offsetTop;
+
+        let distance= Math.sqrt(Math.pow((this.#emlCursorMidX-this.#elmMidX),2)+Math.pow((this.#emlCursorMidY-this.#elmMidY),2));
+
         if (this.#elm.offsetTop >= (innerHeight - this.#height) || this.#elm.offsetTop <= 0){
             this.#dy = -this.#dy;
         }
         if (this.#elm.offsetLeft >= (innerWidth - this.#width) || this.#elm.offsetLeft <= 0){      
             this.#dx = -this.#dx;
         } 
+        if(distance <= this.#length){
+            this.#dx = -this.#dx;
+            this.#dy = -this.#dy;  
+        }
     
         this.#elm.style.left = `${this.#elm.offsetLeft + this.#dx}px`;
         this.#elm.style.top = `${this.#elm.offsetTop + this.#dy}px`; 
@@ -84,3 +136,4 @@ for(let i = 0; i < 50; i++){
 setInterval(()=>{
     boxes.forEach(box => box.move());
 }, 20);
+

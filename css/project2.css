@@ -8,4 +8,18 @@
   position: fixed;
 }
 
+body {
+  overflow: hidden;
+}
+
+#space-ship {
+  position: absolute;
+  background-image: url("/img/rocket.png");
+  background-size: contain;
+  width: 200px;
+  height: 200px;
+  top: 10vh;
+  transform: rotateZ(90deg);
+}
+
 /*# sourceMappingURL=project2.css.map */
