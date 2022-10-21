@@ -14,7 +14,7 @@ body {
 
 #space-ship {
   position: absolute;
-  background-image: url("/img/rocket.png");
+  background-image: url("../img/rocket.png");
   background-size: contain;
   width: 200px;
   height: 200px;

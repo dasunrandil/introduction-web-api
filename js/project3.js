@@ -52,3 +52,4 @@ function animateText(timeStamp) {    //1
 } 
 
 requestAnimationFrame(animateText);
+
